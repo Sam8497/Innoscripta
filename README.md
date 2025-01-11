@@ -1,39 +1,3 @@
-## Dockerization
-### Dockerfile
-
-The Dockerfile defines the steps to build the Docker image for the application.
-
-# Step 1: Use Node.js for building the app
-FROM node:21-alpine
-
-# Step 2: Set the working directory
-WORKDIR /app
-
-# Step 3: Copy package.json and install dependencies
-COPY package*.json ./
-
-RUN npm install
-
-# Step 4: Copy the application source code
-COPY . .
-
-# Step 5: Expose port 5173 for HTTP traffic
-EXPOSE 5173
-
-# Step 6: Start the application
-CMD ["npm", "run", "dev"]
-
-## Build and Run the Docker Container
-1. Build the Docker Image: Open a terminal in the root directory of your project and run:
-
-    `docker build -t innoscripta`
-
-2. Run the Docker Container: To start a container from your image, run:
-    `docker run -p 5173:5173 innoscripta`
-
-    If using Docker Compose, you can build and run the container with:
-    `docker-compose up --build`
-
 ### Project Setup and Dockerization
 1. Clone the Repository:
 
@@ -46,7 +10,7 @@ CMD ["npm", "run", "dev"]
 
 3. Build the Docker Image:
 
-    `docker build -t innoscripta .`
+    `docker build -t innoscripta`
 
 4. Run the Docker Container:
     
@@ -72,7 +36,7 @@ CMD ["npm", "run", "dev"]
 
     Then stop it with:
 
-    `docker stop <container_id>`
+    `docker stop <container_id_or_name>`
 
 # Run locally 
 
