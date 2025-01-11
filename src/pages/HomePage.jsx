@@ -1,12 +1,12 @@
 import React from 'react'
-import News from '../components/News'
+import { News } from '../components'
 
-const HomePage = () => {
-  return (
-    <div>
-      <News />
-    </div>
-  )
+function HomePage() {
+	return (
+		<div>
+			<News />
+		</div>
+	)
 }
 
 export default HomePage
