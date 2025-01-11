@@ -23,6 +23,7 @@ import { sources, categories, capitaLize } from "../config/config";
 import DatePicker from "react-datepicker";
 import NewsLogo from "../images/newspaper.png";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDebounce } from "../hooks/useDebounce";
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -44,10 +45,22 @@ function NavBar() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
   const isSearchButtonDisabled = searchInputValue.trim() === "";
+
+  // debounce
+  const debouncedValue = useDebounce(searchInputValue, 500);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setQuery(searchInputValue));
-    dispatch(fetchArticles({ query: searchInputValue, source: selected.key, date: startDate }));
+    if (debouncedValue) {
+      dispatch(setQuery(debouncedValue));
+      dispatch(
+        fetchArticles({
+          query: debouncedValue,
+          source: selected.key,
+          date: startDate,
+        })
+      );
+    }
     setSearchInputValue("");
   };
 
@@ -84,7 +97,7 @@ function NavBar() {
         date: startDate,
       })
     );
-    dispatch(setQuery(''));
+    dispatch(setQuery(""));
     // eslint-disable-next-line
   }, [dispatch, selected, selectedCategory]);
 
@@ -97,11 +110,7 @@ function NavBar() {
       expanded={!isCollapsed}
     >
       <Navbar.Brand className="nav-brand" href="/">
-        <img
-          src={NewsLogo}
-          alt="Logo"
-          className="logo"
-        />
+        <img src={NewsLogo} alt="Logo" className="logo" />
       </Navbar.Brand>
       {isCollapsed && (
         <Navbar.Toggle
